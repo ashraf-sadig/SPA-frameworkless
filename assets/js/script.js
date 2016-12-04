@@ -97,7 +97,7 @@ $(function () {
 	// These are called on page load
 
 	// Get data about our products from products.json.
-	$.getJSON( "products.json", function( data ) {
+	$.getJSON( "/products.json", function( data ) {
 
 		// Write the data into our global variable.
 		products = data;
