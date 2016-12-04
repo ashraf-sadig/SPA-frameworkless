@@ -18,8 +18,8 @@
 		<h1><a href="#">Single Page App Without A Framework</a></h1>
 	</header>
 
-	<div class="main-content">
-
+	<div class="main-content" id="root">
+			{{man}}
 		<div class="all-products page">
 
 			<div class="filters">
@@ -27,18 +27,18 @@
 
 					<div class="filter-criteria">
 						<span>Manufacturer</span>
-						<label><input type="checkbox" name="manufacturer" value="apple">Apple</label>
-						<label><input type="checkbox" name="manufacturer" value="samsung">Samsung</label>
-						<label><input type="checkbox" name="manufacturer" value="htc">HTC</label>
-						<label><input type="checkbox" name="manufacturer" value="nokia">Nokia</label>
-						<label><input type="checkbox" name="manufacturer" value="zte">ZTE</label>
-						<label><input type="checkbox" name="manufacturer" value="sony">Sony</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="apple">Apple</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="samsung">Samsung</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="htc">HTC</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="nokia">Nokia</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="zte">ZTE</label>
+						<label><input type="checkbox" name="manufacturer" v-model="man" value="sony">Sony</label>
 					</div>
 
 					<div class="filter-criteria">
 						<span>Screen Size</span>
-						<label><input type="checkbox" value="16" name="storage">16 GB</label>
-						<label><input type="checkbox" value="32" name="storage">32 GB</label>
+						<label><input type="checkbox" value="16" v-model="size" name="storage">16 GB</label>
+						<label><input type="checkbox" value="32" v-model="size" name="storage">32 GB</label>
 					</div>
 
 					<div class="filter-criteria">
@@ -56,30 +56,29 @@
 						<label><input type="checkbox" value="15" name="camera">15 Mpx</label>
 					</div>
 
-					<button>Clear filters</button>
+					<button @click="clearFilters">Clear filters</button>
 
 				</form>
 
 			</div>
 
-			<ul class="products-list">
-				<script id="products-template" type="x-handlebars-template">​
-					{{#each this}}
-						<li data-index="{{id}}">
-							<a href="#" class="product-photo"><img src="{{image.small}}" height="130" alt="{{name}}"/></a>
-							<h2><a href="#"> {{name}} </a></h2>
-							<ul class="product-description">
-								<li><span>Manufacturer: </span>{{specs.manufacturer}}</li>
-								<li><span>Storage: </span>{{specs.storage}} GB</li>
-								<li><span>OS: </span>{{specs.os}}</li>
-								<li><span>Camera: </span>{{specs.camera}} Mpx</li>
-							</ul>
-							<button>Buy Now!</button>
-							<p class="product-price">{{price}}$</p>
-							<div class="highlight"></div>
-						</li>
-					{{/each}}
-				</script> 
+			<ul class="products-list" id="v-allProducts">
+				<li v-for="(product, index) in products" :data-index="index + 1" @click="getProductDetail(index + 1)"
+						:class="{ hidden: (man.length && man.indexOf(product.specs.manufacturer.toLowerCase()) == -1) ||
+						  								(size.length && size.indexOf(product.specs.storage) == -1) }">
+					<a href="#" class="product-photo"><img :src="product.image.small" height="130" :alt="product.name"/></a>
+					<h2><a href="#"> {{product.name}} </a></h2>
+					<ul class="product-description">
+						<li><span>Manufacturer: </span>{{product.specs.manufacturer}}</li>
+						<li><span>Storage: </span>{{product.specs.storage}} GB</li>
+						<li><span>OS: </span>{{product.specs.os}}</li>
+						<li><span>Camera: </span>{{product.specs.camera}} Mpx</li>
+					</ul>
+					<button>Buy Now!</button>
+					<p class="product-price">{{product.price}}$</p>
+					<div class="highlight"></div>
+				</li>
+
 			</ul>
 
 		</div>
@@ -89,10 +88,10 @@
 
 			<div class="overlay"></div>
 
-			<div class="preview-large">
-				<h3>Single product view</h3>
-				<img src=""/>
-				<p></p>
+			<div class="preview-large" v-if="selectedProduct">
+				<h3>{{selectedProduct.name}}</h3>
+				<img :src="selectedProduct.image.large"/>
+				<p>{{selectedProduct.description}}</p>
 
 				<span class="close">×</span>
 			</div>
@@ -109,6 +108,8 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
 	<script src="assets/js/script.js"></script>
+	<script src="assets/js/vue.js"></script>
+	<script src ="assets/js/main.js"></script>
 
 
 </body>
