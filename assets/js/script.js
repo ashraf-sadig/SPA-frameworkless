@@ -22,6 +22,7 @@ $(function () {
 	var checkboxes = $('.all-products input[type=checkbox]');
 
 	checkboxes.click(function () {
+		return;
 
 		var that = $(this),
 			specName = that.attr('name');
@@ -69,6 +70,7 @@ $(function () {
 	// When the "Clear all filters" button is pressed change the hash to '#' (go to the home page)
 	$('.filters button').click(function (e) {
 		e.preventDefault();
+		return;
 		window.location.hash = '#';
 	});
 
@@ -191,20 +193,20 @@ $(function () {
 
 		var theTemplateScript = $("#products-template").html();
 		//Compile the template​
-		var theTemplate = Handlebars.compile (theTemplateScript);
-		list.append (theTemplate(data));
+		// var theTemplate = Handlebars.compile (theTemplateScript);
+		// list.append (theTemplate(data));
 
 
 		// Each products has a data-index attribute.
 		// On click change the url hash to open up a preview for this product only.
 		// Remember: every hashchange triggers the render function.
-		list.find('li').on('click', function (e) {
-			e.preventDefault();
-
-			var productIndex = $(this).data('index');
-
-			window.location.hash = 'product/' + productIndex;
-		})
+		// list.find('li').on('click', function (e) {
+		// 	e.preventDefault();
+    //
+		// 	var productIndex = $(this).data('index');
+    //
+		// 	window.location.hash = 'product/' + productIndex;
+		// })
 	}
 
 	// This function receives an object containing all the product we want to show.
@@ -214,7 +216,7 @@ $(function () {
 			allProducts = $('.all-products .products-list > li');
 
 		// Hide all the products in the products list.
-		allProducts.addClass('hidden');
+		// allProducts.addClass('hidden');
 
 		// Iterate over all of the products.
 		// If their ID is somewhere in the data object remove the hidden class to reveal them.
@@ -224,7 +226,7 @@ $(function () {
 
 			data.forEach(function (item) {
 				if(that.data('index') == item.id){
-					that.removeClass('hidden');
+					// that.removeClass('hidden');
 				}
 			});
 		});
@@ -248,9 +250,9 @@ $(function () {
 			data.forEach(function (item) {
 				if(item.id == index){
 					// Populate '.preview-large' with the chosen product's data.
-					container.find('h3').text(item.name);
-					container.find('img').attr('src', item.image.large);
-					container.find('p').text(item.description);
+					// container.find('h3').text(item.name);
+					// container.find('img').attr('src', item.image.large);
+					// container.find('p').text(item.description);
 				}
 			});
 		}
@@ -264,6 +266,7 @@ $(function () {
 	// filters - our global variable - the object with arrays about what we are searching for.
 	// products - an object with the full products list (from product.json).
 	function renderFilterResults(filters, products){
+		return;
 
 			// This array contains all the possible filter criteria.
 		var criteria = ['manufacturer','storage','os','camera'],
